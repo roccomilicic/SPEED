@@ -54,3 +54,8 @@
   .form-container {
   margin-left: 20px;
 }
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
