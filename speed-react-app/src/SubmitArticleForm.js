@@ -11,14 +11,7 @@ const SubmitArticleForm = () => {
         summary: '',
     });
 
-    const [errors, setErrors] = useState({
-        title: '',
-        authors: '',
-        source: '',
-        year: '',
-        doi: '',
-        summary: '',
-    });
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         setFormData({
@@ -26,6 +19,8 @@ const SubmitArticleForm = () => {
             [e.target.name]: e.target.value,
         });
     };
+
+    const doiPattern = /^10.\d{4,9}\/[-._;()/:A-Z0-9]+$/i; //https://stackoverflow.com/questions/27910/finding-a-doi-in-a-document-or-page works for 99.3% of DOIs
 
     const validateForm = () => {
         const newErrors = {};
@@ -51,6 +46,9 @@ const SubmitArticleForm = () => {
         if (!formData.doi) {
             newErrors.doi = 'DOI is required';
             isValid = false;
+        } else if (!doiPattern.test(formData.doi)) {
+            newErrors.doi = 'Invalid DOI format';
+            isValid = false;
         }
         if (!formData.summary) {
             newErrors.summary = 'Summary is required';
@@ -61,12 +59,33 @@ const SubmitArticleForm = () => {
         return isValid;
     };
 
+    const checkDuplicateDOI = async (doi) => {
+        try {
+            const response = await fetch(`http://localhost:3000/articles/check-doi?doi=${doi}`);
+            const result = await response.json();
+            return result.exists;
+        } catch (error) {
+            console.error('Error checking DOI:', error);
+            return false;
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Validate form data
         if (!validateForm()) {
             return; // Do not submit if validation fails
+        }
+
+        // Check if DOI already exists
+        const doiExists = await checkDuplicateDOI(formData.doi);
+        if (doiExists) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                doi: 'This DOI already exists in the system',
+            }));
+            return; // Prevent form submission if duplicate DOI
         }
 
         try {
@@ -77,7 +96,6 @@ const SubmitArticleForm = () => {
             });
 
             if (!response.ok) {
-                // Handle server errors
                 throw new Error('Failed to submit article');
             }
 
