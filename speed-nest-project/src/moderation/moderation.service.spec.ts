@@ -1,10 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import { ModerationService } from './moderation.service';
 
-@Injectable()
-export class ModerationService {
-  // Example: Logic for getting all reports
-  getAllArticles() {
-    // Placeholder logic - fetch from DB or API
-    return [{ id: 1, report: 'Offensive content' }];
-  }
-}
+describe('ModerationService', () => {
+  let service: ModerationService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [ModerationService],
+    }).compile();
+
+    service = module.get<ModerationService>(ModerationService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
