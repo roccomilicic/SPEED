@@ -77,21 +77,23 @@
 }
 
 .report-item {
-  margin-bottom: 15px;
+  margin-left: -40px;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #fff;
+  width: 100%;
 }
 
 .report-item h3 {
   margin: 0;
+  padding-right: 50px;
   font-size: 1.2em;
   color: #007bff;
 }
 
 .report-item p {
-  margin: 5px 0;
+  margin: 15px;
   color: #555;
 }
 
