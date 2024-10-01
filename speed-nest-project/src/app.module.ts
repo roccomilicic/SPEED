@@ -5,12 +5,10 @@ import { ArticlesController } from './api/articles/articles.controller';
 import { ModerationController } from './moderation/moderation.controller';
 import { ModerationService } from './moderation/moderation.service';
 import { MongooseModule } from '@nestjs/mongoose';
-
-const DB_URI =
-'mongodb+srv://roccomilicic2:ZPFt0VdXL0FnNmRQ@clusterspeed.y8tg4.mongodb.net/?retryWrites=true&w=majority&appName=ClusterSPEED';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [MongooseModule.forRoot(DB_URI)],
+  imports: [ConfigModule.forRoot(), MongooseModule.forRoot(process.env.DB_URI)],
   controllers: [AppController, ArticlesController, ModerationController],
   providers: [AppService, ModerationService],
 })
