@@ -6,16 +6,50 @@ import { Article, DefaultEmptyArticle } from "./Article";
 const CreateArticleComponent = () => {
   const navigate = useRouter();
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const onChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
     setArticle({ ...article, [name]: value });
+    setErrors({ ...errors, [name]: "" }); // Clear the error for this field
+  };
+
+  const validateDOI = (doi: string): boolean => {
+    const doiPattern = /^10\.\d{4,}(?:\.\d+)*\/[^\s]+$/;
+    return doiPattern.test(doi);
+  };
+
+  const validate = (): boolean => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!article.title) newErrors.title = "Title is required";
+    if (!article.authors) newErrors.authors = "Authors are required";
+    if (!article.source) newErrors.source = "Source is required";
+    if (!article.year_of_publication) {
+      newErrors.year_of_publication = "Year of Publication is required";
+    } else if (article.year_of_publication <= 1600 || article.year_of_publication > new Date().getFullYear()) {
+      newErrors.year_of_publication = "Year of Publication must be above 1600 and less than or equal to " + new Date().getFullYear();
+    }
+    if (!article.doi) {
+      newErrors.doi = "DOI is required";
+    } else if (!validateDOI(article.doi)) {
+      newErrors.doi = "DOI format must be 10.XXXX/YYYY";
+    }
+    if (!article.summary) newErrors.summary = "Summary is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!validate()) {
+      return; // Stop submission if validation fails
+    }
+
     console.log(article);
 
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
@@ -62,6 +96,7 @@ const CreateArticleComponent = () => {
                   value={article.title}
                   onChange={onChange}
                 />
+                {errors.title && <div className="text-danger">{errors.title}</div>}
               </div>
               <br />
               <div className="form-group">
@@ -73,6 +108,7 @@ const CreateArticleComponent = () => {
                   value={article.authors}
                   onChange={onChange}
                 />
+                {errors.authors && <div className="text-danger">{errors.authors}</div>}
               </div>
               <br />
               <div className="form-group">
@@ -84,6 +120,7 @@ const CreateArticleComponent = () => {
                   value={article.source}
                   onChange={onChange}
                 />
+                {errors.source && <div className="text-danger">{errors.source}</div>}
               </div>
               <br />
               <div className="form-group">
@@ -95,6 +132,9 @@ const CreateArticleComponent = () => {
                   value={article.year_of_publication || ""}
                   onChange={onChange}
                 />
+                {errors.year_of_publication && (
+                  <div className="text-danger">{errors.year_of_publication}</div>
+                )}
               </div>
               <br />
               <div className="form-group">
@@ -106,6 +146,7 @@ const CreateArticleComponent = () => {
                   value={article.doi}
                   onChange={onChange}
                 />
+                {errors.doi && <div className="text-danger">{errors.doi}</div>}
               </div>
               <br />
               <div className="form-group">
@@ -116,6 +157,7 @@ const CreateArticleComponent = () => {
                   value={article.summary}
                   onChange={onChange}
                 />
+                {errors.summary && <div className="text-danger">{errors.summary}</div>}
               </div>
               <button
                 type="submit"
