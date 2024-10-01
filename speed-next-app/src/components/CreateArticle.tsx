@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Article, DefaultEmptyArticle } from "./Article";
@@ -14,29 +14,29 @@ const CreateArticleComponent = () => {
     setArticle({ ...article, [name]: value });
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(article);
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(article),
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(article),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Article created:", data);
+        setArticle(DefaultEmptyArticle);
+        navigate.push("/"); // Redirect to the articles list
+      })
+      .catch((err) => {
+        console.log("Error from CreateArticle: " + err);
       });
-
-      if (!res.ok) {
-        throw new Error('Failed to create article');
-      }
-
-      const newArticle = await res.json(); // Get the created article if needed
-      console.log("Article created:", newArticle);
-
-      setArticle(DefaultEmptyArticle); // Reset the article state
-      navigate.push("/"); // Redirect to the article list
-    } catch (err) {
-      console.log("Error from CreateArticle: " + err);
-    }
   };
 
   return (
@@ -61,7 +61,6 @@ const CreateArticleComponent = () => {
                   className="form-control"
                   value={article.title}
                   onChange={onChange}
-                  required
                 />
               </div>
               <br />
@@ -73,7 +72,6 @@ const CreateArticleComponent = () => {
                   className="form-control"
                   value={article.authors}
                   onChange={onChange}
-                  required
                 />
               </div>
               <br />
@@ -85,7 +83,6 @@ const CreateArticleComponent = () => {
                   className="form-control"
                   value={article.source}
                   onChange={onChange}
-                  required
                 />
               </div>
               <br />
@@ -97,7 +94,6 @@ const CreateArticleComponent = () => {
                   className="form-control"
                   value={article.year_of_publication || ""}
                   onChange={onChange}
-                  required
                 />
               </div>
               <br />
@@ -109,7 +105,6 @@ const CreateArticleComponent = () => {
                   className="form-control"
                   value={article.doi}
                   onChange={onChange}
-                  required
                 />
               </div>
               <br />
@@ -120,7 +115,6 @@ const CreateArticleComponent = () => {
                   className="form-control"
                   value={article.summary}
                   onChange={onChange}
-                  required
                 />
               </div>
               <button
