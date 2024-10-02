@@ -5,5 +5,6 @@ export class CreateArticleDto {
     year: string;
     doi: string;
     summary: string;
+    status: string;  
   }
   
