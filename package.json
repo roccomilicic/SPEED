@@ -1,0 +1,27 @@
+{
+    "name": "SPEED",
+    "version": "2.0.0",
+    "description": "SPEED ENSE701 Project",
+    "scripts": {
+      "start": "npm run start --prefix ./speed-next-app && npm run start --prefix ./speed-nest-project",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+      "keyword1",
+      "keyword2"
+    ],
+    "author": "Rocco",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^5.11.15"
+    },
+    "devDependencies": {
+      "jest": "^26.6.3"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/roccomilicic/SPEED"
+    }
+  }
+  
