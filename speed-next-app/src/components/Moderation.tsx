@@ -1,6 +1,5 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import ArticleCard from './ArticleCard'; // Ensure you have this component
 import { Article } from './Article'; // Ensure you have this type
 
@@ -43,9 +42,6 @@ function ModerationList() {
             <h2 className='display-4 text-center'>Articles Pending Moderation</h2>
           </div>
           <div className='col-md-11'>
-            <Link href='/create-article' className='btn btn-outline-warning float-right'>
-              + Add New Article
-            </Link>
             <br />
             <br />
             <hr />

@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Article, DefaultEmptyArticle } from "./Article";
 
 const CreateArticleComponent = () => {
@@ -77,12 +76,6 @@ const CreateArticleComponent = () => {
     <div className="CreateArticle">
       <div className="container">
         <div className="row">
-          <div className="col-md-8 m-auto">
-            <br />
-            <Link href="/" className="btn btn-outline-warning float-left">
-              Show Article List
-            </Link>
-          </div>
           <div className="col-md-10 m-auto">
             <h1 className="display-4 text-center">Add Article</h1>
             <p className="lead text-center">Create new article</p>

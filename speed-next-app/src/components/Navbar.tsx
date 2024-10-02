@@ -9,11 +9,14 @@ function NavBar() {
       <div className="container">
         <div className="row">
           <div className="col-md-12 m-auto">
+          <Link href="/create-article" className="btn btn-outline-warning float-right">
+              + Create Article
+            </Link>
+          <Link href="/" className="btn btn-outline-warning float-right">
+              Show Article List
+            </Link>
             <Link href="/moderation" className="btn btn-outline-warning float-left">
               Moderation
-            </Link>
-            <Link href="/show-article-list" className="btn btn-outline-warning float-right">
-              Show Article List
             </Link>
           </div>
         </div>
