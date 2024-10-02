@@ -9,7 +9,7 @@ export class Article {
   title: string;
 
   @Prop({ required: true })
-  authors: string; 
+  authors: string;
 
   @Prop({ required: true })
   source: string;
@@ -22,6 +22,12 @@ export class Article {
 
   @Prop()
   summary: string;
+
+  @Prop({ 
+    enum: ['Pending', 'Approved', 'Rejected'], 
+    default: 'Pending'
+  })
+  status: 'Pending' | 'Approved' | 'Rejected';  
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

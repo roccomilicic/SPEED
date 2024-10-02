@@ -7,6 +7,7 @@ export declare class Article {
     year_of_publication: number;
     doi: string;
     summary: string;
+    status: 'Pending' | 'Approved' | 'Rejected';
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, import("mongoose").Document<unknown, any, Article> & Article & {
     _id: import("mongoose").Types.ObjectId;

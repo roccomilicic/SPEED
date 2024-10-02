@@ -11,8 +11,6 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const articles_controller_1 = require("./api/articles/articles.controller");
-const moderation_controller_1 = require("./moderation/moderation.controller");
-const moderation_service_1 = require("./moderation/moderation.service");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
 const articles_module_1 = require("./api/articles/articles.module");
@@ -29,9 +27,8 @@ exports.AppModule = AppModule = __decorate([
         controllers: [
             app_controller_1.AppController,
             articles_controller_1.ArticlesController,
-            moderation_controller_1.ModerationController,
         ],
-        providers: [app_service_1.AppService, moderation_service_1.ModerationService],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

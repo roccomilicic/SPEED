@@ -38,6 +38,13 @@ __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "summary", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        enum: ['Pending', 'Approved', 'Rejected'],
+        default: 'Pending'
+    }),
+    __metadata("design:type", String)
+], Article.prototype, "status", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)()
 ], Article);

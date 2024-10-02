@@ -11,9 +11,11 @@ const CreateArticleComponent = () => {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setArticle({ ...article, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Clear the error for this field
+    setArticle({ ...article, [name]: value }); 
+    setErrors({ ...errors, [name]: "" }); 
   };
+
+  console.log("Article:", article);
 
   const validateDOI = (doi: string): boolean => {
     const doiPattern = /^10\.\d{4,}(?:\.\d+)*\/[^\s]+$/;
@@ -28,8 +30,13 @@ const CreateArticleComponent = () => {
     if (!article.source) newErrors.source = "Source is required";
     if (!article.year_of_publication) {
       newErrors.year_of_publication = "Year of Publication is required";
-    } else if (article.year_of_publication <= 1600 || article.year_of_publication > new Date().getFullYear()) {
-      newErrors.year_of_publication = "Year of Publication must be above 1600 and less than or equal to " + new Date().getFullYear();
+    } else if (
+      article.year_of_publication <= 1600 ||
+      article.year_of_publication > new Date().getFullYear()
+    ) {
+      newErrors.year_of_publication =
+        "Year of Publication must be above 1600 and less than or equal to " +
+        new Date().getFullYear();
     }
     if (!article.doi) {
       newErrors.doi = "DOI is required";
@@ -44,13 +51,14 @@ const CreateArticleComponent = () => {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+  
     if (!validate()) {
       return; // Stop submission if validation fails
     }
 
-    console.log(article);
-
+  
+    console.log("Submitting article:", article);
+  
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -64,13 +72,14 @@ const CreateArticleComponent = () => {
       })
       .then((data) => {
         console.log("Article created:", data);
-        setArticle(DefaultEmptyArticle);
+        setArticle(DefaultEmptyArticle); // Reset the article to the default state
         navigate.push("/"); // Redirect to the articles list
       })
       .catch((err) => {
         console.log("Error from CreateArticle: " + err);
       });
   };
+  
 
   return (
     <div className="CreateArticle">
