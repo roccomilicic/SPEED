@@ -15,6 +15,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         <p className="card-text"><strong>Year:</strong> {article.year_of_publication}</p>
         <p className="card-text"><strong>DOI:</strong> {article.doi}</p>
         <p className="card-text"><strong>Summary:</strong> {article.summary}</p>
+        <p className="card-text"><strong>Status:</strong> {article.status}</p>
       </div>
     </div>
   );

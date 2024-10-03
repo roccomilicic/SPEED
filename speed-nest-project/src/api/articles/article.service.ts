@@ -21,9 +21,10 @@ export class ArticleService {
   }
 
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
-    return await this.articleModel.create(createArticleDto);
+    const newArticle = await this.articleModel.create(createArticleDto);
+    return newArticle; // Ensure this returns the complete article including status
   }
-
+  
   async update(id: string, createArticleDto: CreateArticleDto): Promise<Article> {
     return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
   }

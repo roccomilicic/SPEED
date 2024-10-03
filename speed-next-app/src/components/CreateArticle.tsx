@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Article, DefaultEmptyArticle } from "./Article";
 
 const CreateArticleComponent = () => {
@@ -12,9 +11,11 @@ const CreateArticleComponent = () => {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setArticle({ ...article, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Clear the error for this field
+    setArticle({ ...article, [name]: value }); 
+    setErrors({ ...errors, [name]: "" }); 
   };
+
+  console.log("Article:", article);
 
   const validateDOI = (doi: string): boolean => {
     const doiPattern = /^10\.\d{4,}(?:\.\d+)*\/[^\s]+$/;
@@ -29,8 +30,13 @@ const CreateArticleComponent = () => {
     if (!article.source) newErrors.source = "Source is required";
     if (!article.year_of_publication) {
       newErrors.year_of_publication = "Year of Publication is required";
-    } else if (article.year_of_publication <= 1600 || article.year_of_publication > new Date().getFullYear()) {
-      newErrors.year_of_publication = "Year of Publication must be above 1600 and less than or equal to " + new Date().getFullYear();
+    } else if (
+      article.year_of_publication <= 1600 ||
+      article.year_of_publication > new Date().getFullYear()
+    ) {
+      newErrors.year_of_publication =
+        "Year of Publication must be above 1600 and less than or equal to " +
+        new Date().getFullYear();
     }
     if (!article.doi) {
       newErrors.doi = "DOI is required";
@@ -45,13 +51,14 @@ const CreateArticleComponent = () => {
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+  
     if (!validate()) {
       return; // Stop submission if validation fails
     }
 
-    console.log(article);
-
+  
+    console.log("Submitting article:", article);
+  
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,24 +72,19 @@ const CreateArticleComponent = () => {
       })
       .then((data) => {
         console.log("Article created:", data);
-        setArticle(DefaultEmptyArticle);
+        setArticle(DefaultEmptyArticle); // Reset the article to the default state
         navigate.push("/"); // Redirect to the articles list
       })
       .catch((err) => {
         console.log("Error from CreateArticle: " + err);
       });
   };
+  
 
   return (
     <div className="CreateArticle">
       <div className="container">
         <div className="row">
-          <div className="col-md-8 m-auto">
-            <br />
-            <Link href="/" className="btn btn-outline-warning float-left">
-              Show Article List
-            </Link>
-          </div>
           <div className="col-md-10 m-auto">
             <h1 className="display-4 text-center">Add Article</h1>
             <p className="lead text-center">Create new article</p>

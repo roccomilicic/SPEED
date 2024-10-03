@@ -31,7 +31,8 @@ let ArticleService = class ArticleService {
         return await this.articleModel.findById(id).exec();
     }
     async create(createArticleDto) {
-        return await this.articleModel.create(createArticleDto);
+        const newArticle = await this.articleModel.create(createArticleDto);
+        return newArticle;
     }
     async update(id, createArticleDto) {
         return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
