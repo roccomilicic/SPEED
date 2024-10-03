@@ -29,8 +29,35 @@ function ModerationList() {
     fetchArticles();
   }, []);
 
+  // Function to handle status change
+  const handleStatusChange = async (articleId: string, newStatus: 'Approved' | 'Rejected') => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${articleId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      
+      if (!res.ok) {
+        throw new Error('Failed to update article status.');
+      }
+
+      // Update the local state
+      setArticles((prevArticles) =>
+        prevArticles.map((article) =>
+          article._id === articleId ? { ...article, status: newStatus } : article
+        )
+      );
+    } catch (err) {
+      console.log('Error updating article status: ' + err);
+      setError('Failed to update article status.');
+    }
+  };
+
   // Filter the articles to show only those in "Pending" status for moderation
-  const moderationArticles = articles.filter(article => article.status === 'Pending');
+  const moderationArticles = articles.filter(article => article.status === 'Pending' || article.status === 'Rejected');
 
   // Check loading and error states
   if (loading) {
@@ -45,7 +72,17 @@ function ModerationList() {
     moderationArticles.length === 0
       ? <div className='text-center'>There are no articles pending moderation!</div>
       : moderationArticles.map((article, k) => (
-          <ArticleCard article={article} key={k} />
+          <div key={k} className="article-card">
+            <ArticleCard article={article} />
+            <div className="moderation-buttons">
+              <button onClick={() => handleStatusChange(article._id!, 'Approved')} className="btn btn-success">
+                Approve
+              </button>
+              <button onClick={() => handleStatusChange(article._id!, 'Rejected')} className="btn btn-danger">
+                Reject
+              </button>
+            </div>
+          </div>
         ));
 
   return (
