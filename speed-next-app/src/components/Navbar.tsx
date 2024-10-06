@@ -30,6 +30,12 @@ function NavBar() {
             >
               Moderation
             </Link>
+            <Link 
+              href="/analyze" 
+              className={`btn btn-outline-warning float-left ${currentPath === '/analyze' ? 'active' : ''}`}
+            >
+              Analysis
+            </Link>
           </div>
         </div>
       </div>
