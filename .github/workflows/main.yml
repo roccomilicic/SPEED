@@ -53,7 +53,7 @@ jobs:
         working-directory: ./speed-nest-project
 
       - name: Run backend unit tests
-        run: npx jest
+        run: npx jest --config jest.config.js
         working-directory: ./speed-nest-project
 
       - name: Run backend integration tests
