@@ -21,14 +21,34 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
+      - name: Install dependencies (Root)
         run: npm install
+        working-directory: ./
 
-      - name: Run unit tests
+      - name: Install dependencies (Frontend)
+        run: npm install
+        working-directory: ./speed-next-app
+
+      - name: Install dependencies (Backend)
+        run: npm install
+        working-directory: ./speed-nest-project
+
+      - name: Run frontend unit tests
         run: npm test
+        working-directory: ./speed-next-app
+
+      - name: Run backend unit tests
+        run: npm test
+        working-directory: ./speed-nest-project
 
       - name: Run integration tests
         run: npm run test:integration
+        working-directory: ./speed-nest-project
 
-      - name: Build project
+      - name: Build frontend
         run: npm run build
+        working-directory: ./speed-next-app
+
+      - name: Build backend
+        run: npm run build
+        working-directory: ./speed-nest-project
