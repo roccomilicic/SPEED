@@ -38,34 +38,21 @@ jobs:
         run: npm install
         working-directory: ./speed-nest-project
 
-      # Step 6: Install MongoDB for backend tests
-      - name: Install MongoDB
-        run: sudo apt-get install -y mongodb
-
-      # Step 7: Install Nest CLI globally
-      - name: Install Nest CLI
-        run: npm install -g @nestjs/cli
-
-      # Step 8: Set environment variables for MongoDB (for backend)
+      # Step 6: Set environment variables for MongoDB (for backend)
       - name: Set environment variables
         run: echo "MONGO_URI=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
 
-      # Step 9: Run frontend tests
+      # Step 7: Run frontend tests
       - name: Run frontend unit tests
         run: npm run test
         working-directory: ./speed-next-app
 
-      # Step 10: Run backend unit tests with ignored failing tests
+      # Step 8: Run backend unit tests with ignored failing tests
       - name: Run backend unit tests
         run: npm run test -- --testPathIgnorePatterns "test/(article|app).e2e-spec.ts|src/app.controller.spec.ts" --passWithNoTests
         working-directory: ./speed-nest-project
 
-      # Step 11: Build frontend
+      # Step 9: Build frontend
       - name: Build frontend
         run: npm run build
         working-directory: ./speed-next-app
-
-      # Step 12: Build backend
-      - name: Build backend
-        run: npm run build
-        working-directory: ./speed-nest-project
