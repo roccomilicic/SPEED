@@ -10,32 +10,22 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2  
+        uses: actions/setup-node@v2
         with:
           node-version: '16'
 
-      - name: Install root dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Install frontend dependencies
-        run: npm install
-        working-directory: ./speed-next-app
+      - name: Set environment variables
+        run: echo "MONGO_URI=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
 
-      - name: Install backend dependencies
-        run: npm install
-        working-directory: ./speed-nest-project
-
-      - name: Run frontend unit tests
+      - name: Run tests
         run: npm test
-        working-directory: ./speed-next-app
-
-      - name: Run backend unit tests
-        run: npm test
-        working-directory: ./speed-nest-project
