@@ -44,12 +44,12 @@ jobs:
 
       # Step 7: Run frontend tests
       - name: Run frontend unit tests
-        run: npx jest --config jest.config.js --runInBand
+        run: npm run test
         working-directory: ./speed-next-app
 
       # Step 8: Run backend unit tests
       - name: Run backend unit tests
-        run: npx jest --config jest.config.js --runInBand
+        run: npm run test
         working-directory: ./speed-nest-project
 
       # Step 9: Build frontend
