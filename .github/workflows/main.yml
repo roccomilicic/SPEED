@@ -13,19 +13,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Step 2: Set up Node.js version (upgrade to v18 as required by Next.js)
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'  # Upgrade to Node.js version 18 to meet Next.js requirements
 
-      - name: Install dependencies
+      # Step 3: Install dependencies for Root project
+      - name: Install dependencies (Root)
         run: npm install
+        working-directory: ./
 
+      # Step 4: Install dependencies for Frontend
+      - name: Install dependencies (Frontend)
+        run: npm install
+        working-directory: ./speed-next-app
+
+      # Step 5: Install dependencies for Backend
+      - name: Install dependencies (Backend)
+        run: npm install
+        working-directory: ./speed-nest-project
+
+      # Step 6: Set environment variables for MongoDB (for backend)
       - name: Set environment variables
         run: echo "MONGO_URI=mongodb://localhost:27017/testdb" >> $GITHUB_ENV
 
-      - name: Run tests
-        run: npm test
+      # Step 7: Run frontend tests
+      - name: Run frontend unit tests
+        run: npx jest --config jest.config.js --runInBand
+        working-directory: ./speed-next-app
+
+      # Step 8: Run backend unit tests
+      - name: Run backend unit tests
+        run: npx jest --config jest.config.js --runInBand
+        working-directory: ./speed-nest-project
+
+      # Step 9: Build frontend
+      - name: Build frontend
+        run: npm run build
+        working-directory: ./speed-next-app
+
+      # Step 10: Build backend
+      - name: Build backend
+        run: npm run build
+        working-directory: ./speed-nest-project
