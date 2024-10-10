@@ -15,7 +15,6 @@ const CreateArticleComponent = () => {
     setErrors({ ...errors, [name]: "" }); 
   };
 
-  console.log("Article:", article);
 
   const validateDOI = (doi: string): boolean => {
     const doiPattern = /^10\.\d{4,}(?:\.\d+)*\/[^\s]+$/;
