@@ -1,18 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express'; // Import the ExpressAdapter
-import * as express from 'express'; // Import Express
-
-const app = express(); // Create an instance of Express
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const nestApp = await NestFactory.create(AppModule, new ExpressAdapter(app)); // Use the ExpressAdapter
-  nestApp.enableCors({ origin: true, credentials: true }); // Enable CORS
-  await nestApp.init(); // Initialize the Nest application
+  const app = await NestFactory.create(AppModule);
+
+  // Apply global pipes, like ValidationPipe if needed
+  app.useGlobalPipes(new ValidationPipe());
+
+  // Enable CORS (if needed)
+  app.enableCors();
+
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
-
-// Start the Nest application
 bootstrap();
-
-// Export the app for Vercel serverless functions
-export default app; // This line allows Vercel to access the app
