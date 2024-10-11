@@ -1,22 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import express from 'express'; // Change this line to use default import
-
-const server = express(); // This should now work correctly
 
 async function bootstrap() {
-  try {
-    const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
-    
-    app.setGlobalPrefix('api');
-    app.enableCors({ origin: true, credentials: true });
-    await app.init();
-  } catch (error) {
-    console.error('Error starting the server:', error);
-  }
+  const app = await NestFactory.create(AppModule); // enable cors
+  app.enableCors({ origin: true, credentials: true });
+  const port = process.env.PORT || 8082;
+  await app.listen(port, () => console.log(`Server running on port ${port}`));
 }
 
 bootstrap();
-
-export default server;
