@@ -22,26 +22,37 @@ function ShowArticleList() {
       });
   }, []);
 
+  const hasPendingArticles = articles.some((article) => article.status === 'Pending');
+  const approvedArticles = articles.filter((article) => article.status === 'Approved');
+
   const articleList =
     articles.length === 0
       ? 'There are no article records!'
-      : articles.map((article, k) => (
+      : approvedArticles.map((article, k) => (
           <ArticleCard article={article} key={k} />
         ));
 
-  return (
-    <div className="ShowArticleList">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <br />
-            <h2 className="display-4 text-center">Articles List</h2>
+        return (
+          <div className="ShowArticleList">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <br />
+                  <h2 className="display-4 text-center">Articles List</h2>
+                </div>
+              </div>
+              
+              {/* Notification banner for pending articles */}
+              {hasPendingArticles && (
+                <div className="alert alert-warning text-center" role="alert">
+                  There are articles in the moderation queue that need to be reviewed!
+                </div>
+              )}
+        
+              <div className="list">{articleList}</div>
+            </div>
           </div>
-        </div>
-        <div className="list">{articleList}</div>
-      </div>
-    </div>
-  );
+        );        
 }
 
 export default ShowArticleList;
