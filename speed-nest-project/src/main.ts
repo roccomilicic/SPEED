@@ -1,17 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
+import express from 'express'; // Change this line to use default import
 
-const server = express(); // Create an instance of Express
+const server = express(); // This should now work correctly
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(server)); // Use ExpressAdapter
-  app.enableCors({ origin: true, credentials: true }); // Enable CORS
-  await app.init(); // Initialize the Nest application
+  try {
+    const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
+    
+    app.setGlobalPrefix('api');
+    app.enableCors({ origin: true, credentials: true });
+    await app.init();
+  } catch (error) {
+    console.error('Error starting the server:', error);
+  }
 }
 
 bootstrap();
 
-// Export the Express server as the default export for Vercel
 export default server;
