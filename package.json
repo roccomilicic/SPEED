@@ -1,27 +1,31 @@
 {
-    "name": "SPEED",
-    "version": "2.0.0",
-    "description": "SPEED ENSE701 Project",
-    "scripts": {
-      "start": "npm run start --prefix ./speed-next-app && npm run start --prefix ./speed-nest-project",
-      "test": "echo \"No tests specified\""
-    },
-    "keywords": [
-      "keyword1",
-      "keyword2"
-    ],
-    "author": "Rocco",
-    "license": "ISC",
-    "dependencies": {
-      "express": "^4.17.1",
-      "mongoose": "^5.11.15"
-    },
-    "devDependencies": {
-      "jest": "^26.6.3"
-    },
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/roccomilicic/SPEED"
-    }
+  "name": "SPEED",
+  "version": "2.0.0",
+  "description": "SPEED ENSE701 Project",
+  "scripts": {
+    "start": "npm run start --prefix ./speed-next-app && npm run start --prefix ./speed-nest-project",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "npm run test --prefix ./speed-next-app",
+    "test:backend": "npm run test --prefix ./speed-nest-project",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "npm run build --prefix ./speed-next-app",
+    "build:backend": "npm run build --prefix ./speed-nest-project"
+  },
+  "keywords": [
+    "keyword1",
+    "keyword2"
+  ],
+  "author": "Rocco",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roccomilicic/SPEED"
   }
-  
+}
