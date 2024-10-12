@@ -24,7 +24,7 @@ async function bootstrap() {
 
   // Test MongoDB Connection
   try {
-    const connection = await connect("mongodb+srv://rocco:mcY9ItydBZONj0Nu@clusterspeed.y8tg4.mongodb.net/?retryWrites=true&w=majority&appName=ClusterSPEED"); // Use the connect method directly
+    const connection = await connect(process.env.DB_URI); // Use the connect method directly
     console.log('Connected to MongoDB:', connection.connection.name); // Log the name of the database
   } catch (error) {
     console.error('Error connecting to MongoDB:', error.message); // Log connection error

@@ -11,7 +11,7 @@ import { ArticleModule } from './api/articles/articles.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot("mongodb+srv://rocco:mcY9ItydBZONj0Nu@clusterspeed.y8tg4.mongodb.net/?retryWrites=true&w=majority&appName=ClusterSPEED"), 
+    MongooseModule.forRoot(process.env.DB_URI), 
     ArticleModule,
   ],
   controllers: [
