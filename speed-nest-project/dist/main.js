@@ -6,7 +6,7 @@ const mongoose_1 = require("mongoose");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     try {
-        const connection = await (0, mongoose_1.connect)("mongodb+srv://rocco:mcY9ItydBZONj0Nu@clusterspeed.y8tg4.mongodb.net/?retryWrites=true&w=majority&appName=ClusterSPEED");
+        const connection = await (0, mongoose_1.connect)(process.env.DB_URI);
         console.log('Connected to MongoDB:', connection.connection.name);
     }
     catch (error) {
