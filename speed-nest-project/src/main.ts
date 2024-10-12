@@ -1,20 +1,3 @@
-// import { NestFactory } from '@nestjs/core';
-// import { AppModule } from './app.module';
-
-// async function bootstrap() {
-//   const app = await NestFactory.create(AppModule);
-//   app.enableCors({
-//     origin: 'https://speed-vercel-ehmmzquy9-roccos-projects-5f59ad15.vercel.app', 
-//     methods: 'GET,POST,PUT,DELETE', 
-//     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-//     credentials: true, 
-//   });
-//   const port = process.env.PORT || 8082;
-//   await app.listen(port, () => console.log(`Server running on port ${port}`));
-// }
-
-// bootstrap();
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { connect } from 'mongoose'; // Import connect directly
