@@ -10,7 +10,7 @@ async function bootstrap() {
     const connection = await connect(process.env.DB_URI); // Use the connect method directly
     console.log('Connected to MongoDB:', connection.connection.name); // Log the name of the database
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error.message); // Log connection error
+    console.error('Error connecting to MongoDB:', error.message); // Log connection error!
   }
 
   app.enableCors({ origin: true, credentials: true });
