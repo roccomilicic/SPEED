@@ -1,7 +1,7 @@
 // NavBar.test.tsx
 import { render, screen } from '@testing-library/react';
 import NavBar from '../src/components/Navbar';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(() => '/')
