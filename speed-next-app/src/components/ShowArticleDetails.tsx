@@ -27,6 +27,7 @@ function ShowArticleDetails() {
         console.log('Error from ShowArticleDetails: ' + err);
       });
   }, [id]);
+  
 
   const onDeleteClick = (id: string) => {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, { method: 'DELETE' }) // Corrected string interpolation
