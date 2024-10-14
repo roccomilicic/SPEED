@@ -32,11 +32,26 @@ function ShowArticleList() {
     console.log("Searched Term:", searchTerm);
   }, [searchTerm]);
 
-  // Filter articles based on the search term if there is one
+  // Helper function to convert any article field to a string for searching
+  const articleMatchesSearch = (article: Article) => {
+    const searchLower = searchTerm.toLowerCase();
+
+    // Concatenate all relevant fields into a single string for search
+    const combinedFields = `
+      ${article.title || ''} 
+      ${article.authors || ''} 
+      ${article.source || ''} 
+      ${article.year_of_publication || ''} 
+      ${article.doi || ''} 
+      ${article.summary || ''}
+    `.toLowerCase();
+
+    return combinedFields.includes(searchLower);
+  };
+
+  // Filter articles based on the search term matching any field
   const filteredArticles = searchTerm
-    ? articles.filter((article) =>
-        article.title?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+    ? articles.filter(articleMatchesSearch)
     : articles;
 
   const hasPendingArticles = filteredArticles.some((article) => article.status === 'Pending');
