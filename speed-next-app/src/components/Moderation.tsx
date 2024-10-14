@@ -2,11 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import ArticleCard from './ArticleCard'; // Ensure you have this component
 import { Article } from './Article'; // Ensure you have this type
+import { useSearchParams } from 'next/navigation'; // For retrieving search term
 
 function ModerationList() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams(); // To get search params from URL
+  const searchTerm = searchParams.get("search") || ""; // Get the search term from the URL
 
   useEffect(() => {
     // Fetch the articles from the API endpoint
@@ -56,8 +59,27 @@ function ModerationList() {
     }
   };
 
-  // Filter the articles to show only those in "Pending" status for moderation
-  const moderationArticles = articles.filter(article => article.status === 'Pending' || article.status === 'Rejected');
+  // Helper function to match search term across all article fields
+  const articleMatchesSearch = (article: Article) => {
+    const searchLower = searchTerm.toLowerCase();
+
+    // Concatenate all relevant fields into a single string for search
+    const combinedFields = `
+      ${article.title || ''} 
+      ${article.authors || ''} 
+      ${article.source || ''} 
+      ${article.year_of_publication || ''} 
+      ${article.doi || ''} 
+      ${article.summary || ''}
+    `.toLowerCase();
+
+    return combinedFields.includes(searchLower);
+  };
+
+  // Filter the articles to show only those in "Pending" status and match search term
+  const filteredArticles = articles
+    .filter(article => article.status === 'Pending') // Only show pending articles
+    .filter(articleMatchesSearch); // Apply search term filter
 
   // Check loading and error states
   if (loading) {
@@ -69,9 +91,9 @@ function ModerationList() {
   }
 
   const articleList =
-    moderationArticles.length === 0
+    filteredArticles.length === 0
       ? <div className='text-center'>There are no articles pending moderation!</div>
-      : moderationArticles.map((article, k) => (
+      : filteredArticles.map((article, k) => (
           <div key={k} className="article-card">
             <ArticleCard article={article} />
             <div className="moderation-buttons">
