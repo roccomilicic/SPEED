@@ -51,7 +51,8 @@ function NavBar() {
                 Analyze
               </Link>
             </div>
-            <Search placeholder="Search..." /> {}
+            {/* Conditionally render the Search component only if not on the create-article page */}
+            {currentPath !== "/create-article" && <Search placeholder="Search..." />}
           </div>
         </div>
       </div>
