@@ -11,11 +11,11 @@
     "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "module": "esnext",
+    "module": "esnext", // Can use a separate config for Jest
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx",  // Better JSX support with React 17+
     "incremental": true,
     "types": [
       "jest",
@@ -36,9 +36,12 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "__tests__/**/*.ts",   // Make sure tests are included
+    "__tests__/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.test.js"         // If you have any JS test files
   ]
 }
