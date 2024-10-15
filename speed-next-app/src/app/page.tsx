@@ -1,12 +1,16 @@
-'use client'
 import ShowArticleList from "../components/ShowArticleList";
-import NavBar from "../components/Navbar";
-export default function Home() {
-return (
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-<main>
-<NavBar/>
-<ShowArticleList/>
-</main>
-);
+const Navbar = dynamic(() => import("../components/Navbar"), { ssr: false });
+
+export default function Home() {
+  return (
+    <main>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+        <ShowArticleList />
+      </Suspense>
+    </main>
+  );
 }

@@ -1,11 +1,16 @@
 import AnalysisList from "../../components/AnalysisList";
-import NavBar from "../../components/Navbar";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
-export default function ModerationPage() {
+const Navbar = dynamic(() => import("../../components/Navbar"), { ssr: false });
+
+export default function AnalyzePage() {
   return (
     <main>
-      <NavBar />
-      <AnalysisList />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+        <AnalysisList />
+      </Suspense>
     </main>
   );
 }

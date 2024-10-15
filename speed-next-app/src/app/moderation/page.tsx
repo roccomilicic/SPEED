@@ -1,11 +1,16 @@
 import ModerationList from "../../components/Moderation";
-import NavBar from "../../components/Navbar";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const Navbar = dynamic(() => import("../../components/Navbar"), { ssr: false });
 
 export default function ModerationPage() {
   return (
     <main>
-      <NavBar />
-      <ModerationList />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar />
+        <ModerationList />
+      </Suspense>
     </main>
   );
 }
