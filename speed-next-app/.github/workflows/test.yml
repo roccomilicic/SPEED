@@ -1,5 +1,4 @@
 name: GitHub Actions Test
-
 on:
   push:
     branches: [ "main", "develop" ]
@@ -13,15 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      # Add the Node.js version setup here
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '18'  # Set Node.js version to 18
-
-      # Clear node_modules and reinstall dependencies
-      - name: Clear cache and install dependencies
-        run: rm -rf node_modules && npm install --legacy-peer-deps
-
+      - name: Install dependencies
+        run: npm install
       - name: Run test
         run: npm run test:ci
