@@ -21,7 +21,7 @@ jobs:
 
       # Clear node_modules and reinstall dependencies
       - name: Clear cache and install dependencies
-        run: rm -rf node_modules && npm install
+        run: rm -rf node_modules && npm install --legacy-peer-deps
 
       - name: Run test
         run: npm run test:ci
