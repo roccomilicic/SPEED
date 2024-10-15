@@ -20,6 +20,15 @@ export class Article {
   @Prop({ required: true })
   doi: string;
 
+  @Prop({ required: true, default: 'not given' })
+  claim: string;
+
+  @Prop({ required: true, default: 'not given' })
+  evidence: string;
+
+  @Prop({ required: true, default: '3' })
+  rating: string;
+
   @Prop()
   summary: string;
 
@@ -28,6 +37,9 @@ export class Article {
     default: 'Pending'
   })
   status: 'Pending' | 'Approved' | 'Rejected';  
+
+
+
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
