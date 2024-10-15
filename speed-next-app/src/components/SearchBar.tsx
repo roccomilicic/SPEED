@@ -12,7 +12,9 @@ export default function Search({ placeholder }: { placeholder: string }) {
     } else {
       params.delete("search");
     }
-    window.history.pushState({}, '', `?${params.toString()}`);
+    if (typeof window !== 'undefined') {
+      window.history.pushState({}, '', `?${params.toString()}`);
+    }
   }
 
   return (
