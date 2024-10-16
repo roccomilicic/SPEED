@@ -56,7 +56,7 @@ function ModerationList() {
     }
   };
 
-  // Filter the articles to show only those in "Pending" status for moderation
+  // Filter the articles to show only those in "Pending" or "Rejected" status for moderation
   const moderationArticles = articles.filter(article => article.status === 'Pending' || article.status === 'Rejected');
 
   // Check loading and error states

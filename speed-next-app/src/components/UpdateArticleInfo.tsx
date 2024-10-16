@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Article, DefaultEmptyArticle } from './Article'; // Ensure you have a DefaultEmptyArticle defined
+import { Article, DefaultEmptyArticle } from './Article'; 
 import Link from 'next/link';
 
 function UpdateArticleInfo() {
@@ -9,10 +9,10 @@ function UpdateArticleInfo() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`) // Use environment variable
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to fetch article details.'); // Throw error for non-2xx responses
+          throw new Error('Failed to fetch article details.');
         }
         return res.json();
       })
@@ -22,7 +22,7 @@ function UpdateArticleInfo() {
       .catch((err) => {
         console.log('Error from UpdateArticleInfo: ' + err);
       });
-  }, [id]); // Include id in the dependency array
+  }, [id]);
 
   const inputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -39,13 +39,13 @@ function UpdateArticleInfo() {
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
       method: 'PUT',
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(article),
+      body: JSON.stringify(article), 
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to update article.'); // Throw error for non-2xx responses
+          throw new Error('Failed to update article.');
         }
-        router.push(`/show-article/${id}`); // Redirect to the article details page
+        router.push(`/show-article/${id}`);
       })
       .catch((err) => {
         console.log('Error from UpdateArticleInfo: ' + err);
@@ -76,7 +76,7 @@ function UpdateArticleInfo() {
                 placeholder='Title of the Article'
                 name='title'
                 className='form-control'
-                value={article.title || ''} // Handle undefined case
+                value={article.title || ''} 
                 onChange={inputOnChange}
               />
             </div>
@@ -88,7 +88,7 @@ function UpdateArticleInfo() {
                 placeholder='Authors'
                 name='authors'
                 className='form-control'
-                value={article.authors || ''} // Handle undefined case
+                value={article.authors || ''} 
                 onChange={inputOnChange}
               />
             </div>
@@ -100,7 +100,7 @@ function UpdateArticleInfo() {
                 placeholder='Source'
                 name='source'
                 className='form-control'
-                value={article.source || ''} // Handle undefined case
+                value={article.source || ''} 
                 onChange={inputOnChange}
               />
             </div>
@@ -112,7 +112,7 @@ function UpdateArticleInfo() {
                 placeholder='Year of Publication'
                 name='year_of_publication'
                 className='form-control'
-                value={article.year_of_publication || ''} // Handle undefined case
+                value={article.year_of_publication || ''} 
                 onChange={inputOnChange}
               />
             </div>
@@ -124,7 +124,7 @@ function UpdateArticleInfo() {
                 placeholder='DOI'
                 name='doi'
                 className='form-control'
-                value={article.doi || ''} // Handle undefined case
+                value={article.doi || ''} 
                 onChange={inputOnChange}
               />
             </div>
@@ -135,8 +135,45 @@ function UpdateArticleInfo() {
                 placeholder='Summary of the Article'
                 name='summary'
                 className='form-control'
-                value={article.summary || ''} // Handle undefined case
+                value={article.summary || ''} 
                 onChange={textAreaOnChange}
+              />
+            </div>
+            <br />
+
+            <div className='form-group'>
+              <label htmlFor='claim'>Claim</label>
+              <input
+                type='text'
+                placeholder='Claim'
+                name='claim'
+                className='form-control'
+                value={article.claim || ''} 
+                onChange={inputOnChange}
+              />
+            </div>
+            <br />
+            <div className='form-group'>
+              <label htmlFor='evidence'>Evidence</label>
+              <input
+                type='text'
+                placeholder='Evidence'
+                name='evidence'
+                className='form-control'
+                value={article.evidence || ''} 
+                onChange={inputOnChange}
+              />
+            </div>
+            <br />
+            <div className='form-group'>
+              <label htmlFor='rating'>Rating</label>
+              <input
+                type='text'
+                placeholder='Rating'
+                name='rating'
+                className='form-control'
+                value={article.rating || ''} 
+                onChange={inputOnChange}
               />
             </div>
             <br />

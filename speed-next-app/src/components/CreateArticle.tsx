@@ -1,20 +1,28 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Article, DefaultEmptyArticle } from "./Article";
+import './CreateArticle.css';
 
 const CreateArticleComponent = () => {
   const navigate = useRouter();
-  const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
+  const [article, setArticle] = useState<Article>({ 
+    ...DefaultEmptyArticle, 
+    rating: '3',  
+    claim: 'not given', 
+    evidence: 'not given' 
+  }); 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const onChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    setArticle({ ...article, [name]: value }); 
-    setErrors({ ...errors, [name]: "" }); 
+    setArticle({ 
+      ...article, 
+      [name]: value  
+    });
+    setErrors({ ...errors, [name]: "" });
   };
-
 
   const validateDOI = (doi: string): boolean => {
     const doiPattern = /^10\.\d{4,}(?:\.\d+)*\/[^\s]+$/;
@@ -54,31 +62,29 @@ const CreateArticleComponent = () => {
     if (!validate()) {
       return; // Stop submission if validation fails
     }
-
   
     console.log("Submitting article:", article);
   
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(article),
+      body: JSON.stringify(article), 
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return res.json();
       })
       .then((data) => {
         console.log("Article created:", data);
-        setArticle(DefaultEmptyArticle); // Reset the article to the default state
+        setArticle({ ...DefaultEmptyArticle, rating: '3', claim: 'not given', evidence: 'not given' }); 
         navigate.push("/"); // Redirect to the articles list
       })
       .catch((err) => {
         console.log("Error from CreateArticle: " + err);
       });
   };
-  
 
   return (
     <div className="CreateArticle">
@@ -159,6 +165,24 @@ const CreateArticleComponent = () => {
                   onChange={onChange}
                 />
                 {errors.summary && <div className="text-danger">{errors.summary}</div>}
+              </div>
+              <br />
+            
+              <div className="form-group">
+                <label htmlFor="rating">Rating</label>
+                <select
+                  id="rating"
+                  name="rating"
+                  className="form-control"
+                  value={article.rating} 
+                  onChange={onChange}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
               </div>
               <button
                 type="submit"
