@@ -49,7 +49,7 @@ jobs:
 
       # Step 8: Run backend unit tests with ignored failing tests
       - name: Run backend unit tests
-        run: npm run test -- --testPathIgnorePatterns "test/(article|app).e2e-spec.ts|src/app.controller.spec.ts" --passWithNoTests
+        run: npx jest -- --testPathIgnorePatterns "test/(article|app).e2e-spec.ts|src/app.controller.spec.ts" --passWithNoTests
         working-directory: ./speed-nest-project
 
       # Step 9: Build frontend
