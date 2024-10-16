@@ -11,6 +11,9 @@ test('renders ArticleCard with article details', () => {
     doi: '10.1000/testdoi',
     summary: 'This is a test summary',
     status: 'Pending',
+    claim: 'Test claim',         
+    evidence: 'Test evidence',   
+    rating: '4',                  
   };
 
   render(<ArticleCard article={article} />);
@@ -22,4 +25,7 @@ test('renders ArticleCard with article details', () => {
   expect(screen.getByText(/10.1000\/testdoi/i)).toBeInTheDocument();
   expect(screen.getByText(/This is a test summary/i)).toBeInTheDocument();
   expect(screen.getByText(/Pending/i)).toBeInTheDocument();
+  expect(screen.getByText(/Test claim/i)).toBeInTheDocument();        
+  expect(screen.getByText(/Test evidence/i)).toBeInTheDocument();    
+  expect(screen.getByText(/4/i)).toBeInTheDocument();                
 });
