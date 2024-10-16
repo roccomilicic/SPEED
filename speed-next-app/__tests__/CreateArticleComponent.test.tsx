@@ -1,7 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import CreateArticleComponent from '../src/components/CreateArticle';
 import { useRouter } from 'next/navigation';
-
+import React from 'react';
+import '@testing-library/jest-dom'; 
 // Mock useRouter
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),

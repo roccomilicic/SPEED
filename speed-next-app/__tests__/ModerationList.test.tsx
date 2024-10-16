@@ -1,7 +1,8 @@
 // ModerationList.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
 import ModerationList from '../src/components/Moderation';
-
+import React from 'react';
+import '@testing-library/jest-dom'; 
 // Mock fetch
 global.fetch = jest.fn(() =>
   Promise.resolve({

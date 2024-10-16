@@ -1,7 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ShowArticleDetails from '../src/components/ShowArticleDetails';
 import { useParams } from 'next/navigation';
-
+import React from 'react';
+import '@testing-library/jest-dom'; 
 // Mock next/navigation hooks
 jest.mock('next/navigation', () => ({
   useParams: jest.fn(),

@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import ArticleCard from '../src/components/ArticleCard';
 import { Article } from '../src/components/Article';
-
+import React from 'react';
+import '@testing-library/jest-dom'; 
 test('renders ArticleCard with article details', () => {
   const article: Article = {
     title: 'Test Article',
