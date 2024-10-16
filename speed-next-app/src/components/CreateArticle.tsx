@@ -64,6 +64,7 @@ const CreateArticleComponent = () => {
       body: JSON.stringify(article),
     })
       .then((res) => {
+        console.log("Response status:", res.status); // Add this to see the status code
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
@@ -77,6 +78,7 @@ const CreateArticleComponent = () => {
       .catch((err) => {
         console.log("Error from CreateArticle: " + err);
       });
+    
   };
   
 

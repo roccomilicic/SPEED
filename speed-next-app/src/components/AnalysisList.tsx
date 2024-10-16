@@ -12,7 +12,7 @@ function AnalysisList() {
     // Fetch the articles from the API endpoint
     const fetchArticles = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/approved`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }

@@ -1,13 +1,22 @@
-import { Article } from './article.schema';
 import { Model } from 'mongoose';
+import { PendingArticle, PendingArticleDocument } from './pending-article.schema';
+import { ApprovedArticle, ApprovedArticleDocument } from './approved-article.schema';
+import { RejectedArticle, RejectedArticleDocument } from './rejected-article.schema';
 import { CreateArticleDto } from './dto/create-article.dto';
 export declare class ArticleService {
-    private articleModel;
-    constructor(articleModel: Model<Article>);
+    private pendingArticleModel;
+    private approvedArticleModel;
+    private rejectedArticleModel;
+    constructor(pendingArticleModel: Model<PendingArticleDocument>, approvedArticleModel: Model<ApprovedArticleDocument>, rejectedArticleModel: Model<RejectedArticleDocument>);
     test(): string;
-    findAll(): Promise<Article[]>;
-    findOne(id: string): Promise<Article>;
-    create(createArticleDto: CreateArticleDto): Promise<Article>;
-    update(id: string, createArticleDto: CreateArticleDto): Promise<Article>;
-    delete(id: string): Promise<Article>;
+    findAll(): Promise<PendingArticle[]>;
+    findAllPending(): Promise<PendingArticle[]>;
+    findAllApproved(): Promise<ApprovedArticle[]>;
+    findAllRejected(): Promise<RejectedArticle[]>;
+    findOne(id: string): Promise<PendingArticle>;
+    create(createArticleDto: CreateArticleDto): Promise<PendingArticle>;
+    update(id: string, createArticleDto: CreateArticleDto): Promise<PendingArticle>;
+    delete(id: string): Promise<PendingArticle>;
+    approveArticle(articleId: string): Promise<void>;
+    rejectArticle(articleId: string): Promise<void>;
 }

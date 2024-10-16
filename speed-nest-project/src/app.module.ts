@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ArticlesController } from './api/articles/articles.controller'; 
+import { ArticleController } from './api/articles/article.controller'; 
 // import { ModerationController } from './moderation/moderation.controller';
 // import { ModerationService } from './moderation/moderation.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -16,7 +16,7 @@ import { ArticleModule } from './api/articles/articles.module';
   ],
   controllers: [
     AppController,
-    ArticlesController,
+    //ArticleController,
     // ModerationController,
   ],
   providers: [AppService/*, ModerationService*/],

@@ -14,38 +14,83 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticleService = void 0;
 const common_1 = require("@nestjs/common");
-const article_schema_1 = require("./article.schema");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const pending_article_schema_1 = require("./pending-article.schema");
+const approved_article_schema_1 = require("./approved-article.schema");
+const rejected_article_schema_1 = require("./rejected-article.schema");
 let ArticleService = class ArticleService {
-    constructor(articleModel) {
-        this.articleModel = articleModel;
+    constructor(pendingArticleModel, approvedArticleModel, rejectedArticleModel) {
+        this.pendingArticleModel = pendingArticleModel;
+        this.approvedArticleModel = approvedArticleModel;
+        this.rejectedArticleModel = rejectedArticleModel;
     }
     test() {
-        return 'article route testing';
+        return 'This is a test method in ArticleService.';
     }
     async findAll() {
-        return await this.articleModel.find().exec();
+        return await this.pendingArticleModel.find().exec();
+    }
+    async findAllPending() {
+        return await this.pendingArticleModel.find().exec();
+    }
+    async findAllApproved() {
+        return await this.approvedArticleModel.find().exec();
+    }
+    async findAllRejected() {
+        return await this.rejectedArticleModel.find().exec();
     }
     async findOne(id) {
-        return await this.articleModel.findById(id).exec();
+        return await this.pendingArticleModel.findById(id).exec();
     }
     async create(createArticleDto) {
-        const newArticle = await this.articleModel.create(createArticleDto);
-        return newArticle;
+        const newArticle = new this.pendingArticleModel(createArticleDto);
+        return newArticle.save();
     }
     async update(id, createArticleDto) {
-        return await this.articleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
+        return await this.pendingArticleModel.findByIdAndUpdate(id, createArticleDto, { new: true }).exec();
     }
     async delete(id) {
-        const deletedArticle = await this.articleModel.findByIdAndDelete(id).exec();
-        return deletedArticle;
+        return await this.pendingArticleModel.findByIdAndDelete(id).exec();
+    }
+    async approveArticle(articleId) {
+        try {
+            const article = await this.pendingArticleModel.findById(articleId).exec();
+            if (article) {
+                console.log('Article found in pending:', article);
+                await this.pendingArticleModel.findByIdAndDelete(articleId).exec();
+                console.log('Article removed from pending');
+                const approvedArticle = new this.approvedArticleModel(article.toObject());
+                approvedArticle.status = 'Approved';
+                await approvedArticle.save();
+                console.log('Article saved to approved collection');
+            }
+            else {
+                console.log('Article not found in pending');
+            }
+        }
+        catch (error) {
+            console.error('Error during approval process:', error);
+        }
+    }
+    async rejectArticle(articleId) {
+        const article = await this.pendingArticleModel.findById(articleId).exec();
+        if (article) {
+            await this.pendingArticleModel.findByIdAndDelete(articleId).exec();
+            const rejectedArticle = new this.rejectedArticleModel(article.toObject());
+            rejectedArticle.status = 'Rejected';
+            await rejectedArticle.save();
+        }
     }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(article_schema_1.Article.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(0, (0, mongoose_1.InjectModel)(pending_article_schema_1.PendingArticle.name)),
+    __param(1, (0, mongoose_1.InjectModel)(approved_article_schema_1.ApprovedArticle.name)),
+    __param(2, (0, mongoose_1.InjectModel)(rejected_article_schema_1.RejectedArticle.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model,
+        mongoose_2.Model])
 ], ArticleService);
 //# sourceMappingURL=article.service.js.map

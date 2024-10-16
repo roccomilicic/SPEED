@@ -20,79 +20,81 @@ let ArticleController = class ArticleController {
     constructor(articleService) {
         this.articleService = articleService;
     }
-    test() {
-        return this.articleService.test();
+    async getPendingArticles() {
+        return this.articleService.findAllPending();
     }
-    async findAll() {
-        return await this.articleService.findAll();
+    async getApprovedArticles() {
+        return this.articleService.findAllApproved();
     }
-    async findOne(id) {
-        const article = await this.articleService.findOne(id);
-        if (!article) {
-            throw new common_1.HttpException('Article not found', common_1.HttpStatus.NOT_FOUND);
-        }
-        return article;
+    async getRejectedArticles() {
+        return this.articleService.findAllRejected();
     }
-    async create(createArticleDto) {
+    async createArticle(createArticleDto) {
         return await this.articleService.create(createArticleDto);
     }
-    async update(id, createArticleDto) {
-        const updatedArticle = await this.articleService.update(id, createArticleDto);
-        if (!updatedArticle) {
-            throw new common_1.HttpException('Article not found', common_1.HttpStatus.NOT_FOUND);
+    async approveArticle(articleId) {
+        try {
+            console.log('Approving article:', articleId);
+            await this.articleService.approveArticle(articleId);
+            return { message: 'Article approved and moved to approved collection' };
         }
-        return updatedArticle;
+        catch (error) {
+            console.error('Error approving article:', error);
+            throw new common_1.HttpException('Article not found or approval failed', common_1.HttpStatus.BAD_REQUEST);
+        }
     }
-    async delete(id) {
-        const deletedArticle = await this.articleService.delete(id);
-        if (!deletedArticle) {
-            throw new common_1.HttpException('Article not found', common_1.HttpStatus.NOT_FOUND);
+    async rejectArticle(articleId) {
+        try {
+            console.log('Rejecting article:', articleId);
+            await this.articleService.rejectArticle(articleId);
+            return { message: 'Article rejected and moved to rejected collection' };
         }
-        return deletedArticle;
+        catch (error) {
+            console.error('Error rejecting article:', error);
+            throw new common_1.HttpException('Article not found or rejection failed', common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 exports.ArticleController = ArticleController;
 __decorate([
-    (0, common_1.Get)('/test'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ArticleController.prototype, "test", null);
-__decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/pending'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], ArticleController.prototype, "findAll", null);
+], ArticleController.prototype, "getPendingArticles", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)('/approved'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], ArticleController.prototype, "findOne", null);
+], ArticleController.prototype, "getApprovedArticles", null);
+__decorate([
+    (0, common_1.Get)('/rejected'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "getRejectedArticles", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_article_dto_1.CreateArticleDto]),
     __metadata("design:returntype", Promise)
-], ArticleController.prototype, "create", null);
+], ArticleController.prototype, "createArticle", null);
 __decorate([
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, create_article_dto_1.CreateArticleDto]),
-    __metadata("design:returntype", Promise)
-], ArticleController.prototype, "update", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Put)(':id/approve'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], ArticleController.prototype, "delete", null);
+], ArticleController.prototype, "approveArticle", null);
+__decorate([
+    (0, common_1.Put)(':id/reject'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "rejectArticle", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('api/articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])
