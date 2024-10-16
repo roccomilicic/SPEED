@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",  // Recommended for React 18+
-    "module": "esnext",  // Can keep as esnext for module resolution
+    "jsx": "preserve", // Recommended for React 18+
+    "module": "esnext", // Can keep as esnext for module resolution
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -12,15 +12,30 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["jest", "node"],
-    "plugins": [{ "name": "next" }]
+    "types": [
+      "jest",
+      "node"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "__tests__/**/*.ts",
-    "__tests__/**/*.tsx"
+    "__tests__/**/*.tsx",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

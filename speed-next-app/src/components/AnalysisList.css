@@ -1,106 +1,128 @@
-
+/* General styles for light and dark mode compatibility */
 .AnalysisList {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
+  background-color: var(--background, #f5f5f5);
+  padding: 20px;
+  border-radius: 8px;
+  color: var(--text-color, #333);
+}
+
+.AnalysisList-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--container-bg, white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.AnalysisList-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.AnalysisList h2 {
+  color: var(--header-color, #333);
+}
+
+.AnalysisList hr {
+  border: 1px solid var(--border-color, #ccc);
+}
+
+/* Table styling */
+.AnalysisList-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.AnalysisList-table th,
+.AnalysisList-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid var(--border-color, #ddd);
+}
+
+.AnalysisList-table th {
+  background-color: var(--header-bg, #4CAF50);
+  color: white;
+}
+
+.AnalysisList-table tr:nth-child(even) {
+  background-color: var(--row-bg, #f2f2f2);
+}
+
+.AnalysisList-table tr:hover {
+  background-color: var(--hover-bg, #e9e9e9);
+}
+
+/* Edit form styling */
+.AnalysisList-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: var(--edit-form-bg, #fafafa);
+  border-radius: 5px;
+}
+
+.AnalysisList-edit-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.AnalysisList-edit-form input {
+  padding: 10px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 5px;
+}
+
+/* Button styling */
+.AnalysisList-edit-btn,
+.AnalysisList-save-btn {
+  padding: 10px 20px;
+  background-color: var(--button-bg, #2196F3);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.AnalysisList-edit-btn:hover,
+.AnalysisList-save-btn:hover {
+  background-color: var(--button-hover-bg, #1976D2);
+}
+
+/* Error and loading messages */
+.AnalysisList-error {
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.AnalysisList-loading {
+  text-align: center;
+}
+
+.AnalysisList-no-articles {
+  text-align: center;
+  color: var(--no-article-text, #555);
+}
+
+/* Dark mode specific styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+      --background: #121212;
+      --container-bg: #1e1e1e;
+      --text-color: #e0e0e0;
+      --header-color: #e0e0e0;
+      --border-color: #444;
+      --header-bg: #4CAF50;
+      --row-bg: #333;
+      --hover-bg: #444;
+      --edit-form-bg: #333;
+      --button-bg: #2196F3;
+      --button-hover-bg: #1976D2;
+      --no-article-text: #bbb;
   }
-  
-  .AnalysisList-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .AnalysisList-header {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .AnalysisList h2 {
-    color: #333;
-  }
-  
-  .AnalysisList hr {
-    border: 1px solid #ccc;
-  }
-  
-  .AnalysisList-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .AnalysisList-table th,
-  .AnalysisList-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .AnalysisList-table th {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .AnalysisList-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .AnalysisList-table tr:hover {
-    background-color: #e9e9e9;
-  }
-  
-  .AnalysisList-edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    background-color: #fafafa;
-    border-radius: 5px;
-  }
-  
-  .AnalysisList-edit-form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .AnalysisList-edit-form input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .AnalysisList-edit-btn,
-  .AnalysisList-save-btn {
-    padding: 10px 20px;
-    background-color: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .AnalysisList-edit-btn:hover,
-  .AnalysisList-save-btn:hover {
-    background-color: #1976D2;
-  }
-  
-  .AnalysisList-error {
-    color: red;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .AnalysisList-loading {
-    text-align: center;
-  }
-  
-  .AnalysisList-no-articles {
-    text-align: center;
-    color: #555;
-  }
-  
+}

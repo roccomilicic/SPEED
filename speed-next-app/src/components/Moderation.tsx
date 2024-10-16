@@ -7,7 +7,6 @@ function ModerationList() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [needsAnalysis, setNeedsAnalysis] = useState<boolean>(false);
 
   useEffect(() => {
     // Fetch the articles from the API endpoint
@@ -19,14 +18,6 @@ function ModerationList() {
         }
         const data = await res.json();
         setArticles(data);
-
-        // Check if any article with "Approved" status has claim or evidence as 'not given'
-        const hasArticlesNeedingAnalysis = data.some(
-          (article: Article) => 
-            article.status === 'Approved' &&
-            (article.claim === 'not given' || article.evidence === 'not given')
-        );
-        setNeedsAnalysis(hasArticlesNeedingAnalysis); // Set the state if any approved article needs analysis
       } catch (err) {
         console.log('Error from ModerationList: ' + err);
         setError('Failed to fetch articles.');
@@ -101,7 +92,6 @@ function ModerationList() {
           <div className='col-md-12'>
             <br />
             <h2 className='display-4 text-center'>Articles Pending Moderation</h2>
-            {needsAnalysis && <p className="text-warning text-center">There are Approved Articles that need Analysis</p>} 
           </div>
           <div className='col-md-11'>
             <br />
