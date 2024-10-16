@@ -1,4 +1,4 @@
-export type Article = {
+export type Article = { 
   _id?: string;
   title?: string;
   authors?: string;
@@ -7,7 +7,12 @@ export type Article = {
   doi?: string;
   summary?: string;
   status?: 'Pending' | 'Approved' | 'Rejected';
+  
+  claim: string;   
+  evidence: string; 
+  rating: string;   
 };
+
 
 export const DefaultEmptyArticle: Article = {
   _id: undefined,
@@ -18,4 +23,8 @@ export const DefaultEmptyArticle: Article = {
   doi: '',
   summary: '',
   status: 'Pending', 
+
+  claim: 'not given',   
+  evidence: 'not given', 
+  rating: '3',  
 };

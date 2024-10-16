@@ -59,6 +59,7 @@ function ModerationList() {
     }
   };
 
+<<<<<<< HEAD
   // Helper function to match search term across all article fields
   const articleMatchesSearch = (article: Article) => {
     const searchLower = searchTerm.toLowerCase();
@@ -80,6 +81,10 @@ function ModerationList() {
   const filteredArticles = articles
     .filter(article => article.status === 'Pending') // Only show pending articles
     .filter(articleMatchesSearch); // Apply search term filter
+=======
+  // Filter the articles to show only those in "Pending" or "Rejected" status for moderation
+  const moderationArticles = articles.filter(article => article.status === 'Pending' || article.status === 'Rejected');
+>>>>>>> origin/main
 
   // Check loading and error states
   if (loading) {

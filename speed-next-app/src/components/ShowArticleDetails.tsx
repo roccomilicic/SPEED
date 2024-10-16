@@ -1,21 +1,21 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Article, DefaultEmptyArticle } from './Article'; // Ensure you have a DefaultEmptyArticle defined
+import { Article, DefaultEmptyArticle } from './Article'; 
 import Link from 'next/link';
 
 function ShowArticleDetails() {
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
-  const [error, setError] = useState<string | null>(null); // State to hold error messages
+  const [error, setError] = useState<string | null>(null); 
   const id = useParams<{ id: string }>().id;
 
   const navigate = useRouter();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`) // Corrected string interpolation
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`)
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Network response was not ok'); // Throw error for non-2xx responses
+          throw new Error('Network response was not ok');
         }
         return res.json();
       })
@@ -30,12 +30,12 @@ function ShowArticleDetails() {
   
 
   const onDeleteClick = (id: string) => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, { method: 'DELETE' }) // Corrected string interpolation
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, { method: 'DELETE' })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Network response was not ok'); // Throw error for non-2xx responses
+          throw new Error('Network response was not ok');
         }
-        navigate.push('/'); // Redirect after deletion
+        navigate.push('/'); 
       })
       .catch((err) => {
         setError('Error deleting article: ' + err.message);
@@ -77,6 +77,21 @@ function ShowArticleDetails() {
             <td>Summary</td>
             <td>{article.summary}</td>
           </tr>
+          <tr>
+            <th scope='row'>7</th>
+            <td>Claim</td>
+            <td>{article.claim || 'No claim'}</td>
+          </tr>
+          <tr>
+            <th scope='row'>8</th>
+            <td>Evidence</td>
+            <td>{article.evidence || 'No evidence'}</td>
+          </tr>
+          <tr>
+            <th scope='row'>9</th>
+            <td>Rating</td>
+            <td>{article.rating || 'No rating'}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -85,7 +100,7 @@ function ShowArticleDetails() {
   return (
     <div className='ShowArticleDetails'>
       <div className='container'>
-        {error && <div className='alert alert-danger'>{error}</div>} {/* Display error message if it exists */}
+        {error && <div className='alert alert-danger'>{error}</div>}
         <div className='row'>
           <div className='col-md-10 m-auto'>
             <br />
@@ -107,7 +122,7 @@ function ShowArticleDetails() {
               type='button'
               className='btn btn-outline-danger btn-lg btn-block'
               onClick={() => {
-                onDeleteClick(article._id || ''); // Pass the article ID, safely checks for _id
+                onDeleteClick(article._id || '');
               }}
             >
               Delete Article

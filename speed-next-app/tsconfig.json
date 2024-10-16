@@ -1,22 +1,21 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "module": "esnext", // Can use a separate config for Jest
+    "jsx": "preserve", // Recommended for React 18+
+    "module": "esnext", // Can keep as esnext for module resolution
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+<<<<<<< HEAD
     "jsx": "preserve", // Better JSX support with React 17+
+=======
+    "noEmit": true,
+>>>>>>> origin/main
     "incremental": true,
+    "strict": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "types": [
       "jest",
       "node"
@@ -26,16 +25,17 @@
         "name": "next"
       }
     ],
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+<<<<<<< HEAD
     ".next/types/**/*.ts",
     "__tests__/**/*.ts", // Make sure tests are included
     "__tests__/**/*.tsx"
@@ -43,5 +43,13 @@
   "exclude": [
     "node_modules",
     "**/*.test.js" // If you have any JS test files
+=======
+    "__tests__/**/*.ts",
+    "__tests__/**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+>>>>>>> origin/main
   ]
 }

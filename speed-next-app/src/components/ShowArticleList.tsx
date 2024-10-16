@@ -7,8 +7,12 @@ import { useSearchParams } from 'next/navigation'; // Import for search params
 
 function ShowArticleList() {
   const [articles, setArticles] = useState<Article[]>([]);
+<<<<<<< HEAD
   const searchParams = useSearchParams(); // To get search params from URL
   const searchTerm = searchParams.get("search") || ""; // Get the search term from the URL
+=======
+  const [needsAnalysis, setNeedsAnalysis] = useState<boolean>(false);
+>>>>>>> origin/main
 
   useEffect(() => {
     // Fetch the articles from the API endpoint
@@ -21,6 +25,14 @@ function ShowArticleList() {
       })
       .then((articles) => {
         setArticles(articles);
+
+        // Check if any article with "Approved" status has claim or evidence as 'not given'
+        const hasArticlesNeedingAnalysis = articles.some(
+          (article: Article) => 
+            article.status === 'Approved' &&
+            (article.claim === 'not given' || article.evidence === 'not given')
+        );
+        setNeedsAnalysis(hasArticlesNeedingAnalysis); // Set the state if any approved article needs analysis
       })
       .catch((err) => {
         console.log('Error from ShowArticleList: ' + err);
@@ -73,7 +85,11 @@ function ShowArticleList() {
             <h2 className="display-4 text-center">Articles List</h2>
           </div>
         </div>
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         {/* Notification banner for pending articles */}
         {hasPendingArticles && (
           <div className="alert alert-warning text-center" role="alert">
@@ -81,6 +97,16 @@ function ShowArticleList() {
           </div>
         )}
 
+<<<<<<< HEAD
+=======
+        {/* Notification for approved articles that need analysis */}
+        {needsAnalysis && (
+          <div className="alert alert-warning text-center" role="alert">
+            There are Approved Articles that need Analysis
+          </div>
+        )}
+
+>>>>>>> origin/main
         <div className="list">{articleList}</div>
       </div>
     </div>

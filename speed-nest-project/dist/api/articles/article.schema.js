@@ -35,6 +35,18 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "doi", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ required: true, default: 'not given' }),
+    __metadata("design:type", String)
+], Article.prototype, "claim", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, default: 'not given' }),
+    __metadata("design:type", String)
+], Article.prototype, "evidence", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, default: '3' }),
+    __metadata("design:type", String)
+], Article.prototype, "rating", void 0);
+__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "summary", void 0);
