@@ -10,10 +10,11 @@ jest.mock('next/navigation', () => ({
   })),
 }));
 
-// Mock fetch function to return the article details
+
+// Mock fetch
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    ok: true, // Simulate a successful response
+    ok: true, // Add ok flag to indicate successful response
     json: () =>
       Promise.resolve({
         title: 'Test Article',
@@ -28,13 +29,10 @@ global.fetch = jest.fn(() =>
 ) as jest.Mock;
 
 test('renders ShowArticleDetails with article details', async () => {
-  // Mock the useParams hook to return the article ID
   (useParams as jest.Mock).mockReturnValue({ id: '123' });
 
-  // Render the component
   render(<ShowArticleDetails />);
 
-  // Wait for the article details to be fetched and displayed
   await waitFor(() => {
     expect(screen.getByText(/Test Article/i)).toBeInTheDocument();
     expect(screen.getByText(/Jane Doe/i)).toBeInTheDocument();

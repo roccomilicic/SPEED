@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "preserve", // Recommended for React 18+
+    "jsx": "react-jsx", // Recommended for React 18+
     "module": "esnext", // Can keep as esnext for module resolution
     "moduleResolution": "node",
     "resolveJsonModule": true,
