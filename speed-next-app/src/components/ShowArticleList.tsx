@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import ArticleCard from './ArticleCard'; // Ensure you have this component
-import { Article } from './Article'; // Ensure you have this type
+import ArticleCard from './ArticleCard'; 
+import { Article } from './Article'; 
 
 function ShowArticleList() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>(''); // State for search term
   const [needsAnalysis, setNeedsAnalysis] = useState<boolean>(false);
 
   useEffect(() => {
@@ -17,10 +19,11 @@ function ShowArticleList() {
       })
       .then((articles) => {
         setArticles(articles);
+        setFilteredArticles(articles); // Set both articles and filtered articles
 
         // Check if any article with "Approved" status has claim or evidence as 'not given'
         const hasArticlesNeedingAnalysis = articles.some(
-          (article: Article) => 
+          (article: Article) =>
             article.status === 'Approved' &&
             (article.claim === 'not given' || article.evidence === 'not given')
         );
@@ -31,12 +34,21 @@ function ShowArticleList() {
       });
   }, []);
 
+  useEffect(() => {
+    // Filter articles based on the search term
+    const filtered = articles.filter((article) => {
+      const searchIn = `${article.title ?? ''} ${article.doi ?? ''} ${article.summary ?? ''} ${article.year_of_publication ?? ''} ${article.source ?? ''} ${article.authors ?? ''} ${article.claim ?? ''} ${article.evidence ?? ''}`.toLowerCase();
+      return searchIn.includes(searchTerm.toLowerCase());
+    });    
+    setFilteredArticles(filtered);
+  }, [searchTerm, articles]);
+
   const hasPendingArticles = articles.some((article) => article.status === 'Pending');
-  const approvedArticles = articles.filter((article) => article.status === 'Approved');
+  const approvedArticles = filteredArticles.filter((article) => article.status === 'Approved');
 
   const articleList =
-    articles.length === 0
-      ? 'There are no article records!'
+    approvedArticles.length === 0
+      ? 'No articles match your search.'
       : approvedArticles.map((article, k) => (
           <ArticleCard article={article} key={k} />
         ));
@@ -48,6 +60,14 @@ function ShowArticleList() {
           <div className="col-md-12">
             <br />
             <h2 className="display-4 text-center">Articles List</h2>
+            {/* Search Bar */}
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search articles..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
         
