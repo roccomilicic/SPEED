@@ -7,10 +7,10 @@ export type Article = {
   doi?: string;
   summary?: string;
   status?: 'Pending' | 'Approved' | 'Rejected';
-  
   claim: string;   
   evidence: string; 
-  rating: string;   
+  rating: string; 
+  SEPractice?: string;  
 };
 
 
@@ -23,8 +23,8 @@ export const DefaultEmptyArticle: Article = {
   doi: '',
   summary: '',
   status: 'Pending', 
-
   claim: 'not given',   
   evidence: 'not given', 
   rating: '3',  
+  SEPractice: '',
 };

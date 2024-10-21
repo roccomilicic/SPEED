@@ -9,7 +9,8 @@ const CreateArticleComponent = () => {
     ...DefaultEmptyArticle, 
     rating: '3',  
     claim: 'not given', 
-    evidence: 'not given' 
+    evidence: 'not given', 
+    SEPractice: '',
   }); 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -78,7 +79,7 @@ const CreateArticleComponent = () => {
       })
       .then((data) => {
         console.log("Article created:", data);
-        setArticle({ ...DefaultEmptyArticle, rating: '3', claim: 'not given', evidence: 'not given' }); 
+        setArticle({ ...DefaultEmptyArticle, rating: '3', claim: 'not given', evidence: 'not given', SEPractice: '' }); 
         navigate.push("/"); // Redirect to the articles list
       })
       .catch((err) => {
@@ -184,6 +185,10 @@ const CreateArticleComponent = () => {
                   <option value="5">5</option>
                 </select>
               </div>
+
+              <br />
+        
+            
               <button
                 type="submit"
                 className="btn btn-outline-warning btn-block mt-4 mb-4 w-100"

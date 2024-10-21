@@ -6,7 +6,8 @@ export class CreateArticleDto {
   doi: string;
   claim: string;   
   evidence: string; 
-  rating: string;   
+  rating: string;
+  SEPractice: string;   
   summary: string;
   status: 'Pending' | 'Approved' | 'Rejected'; 
 

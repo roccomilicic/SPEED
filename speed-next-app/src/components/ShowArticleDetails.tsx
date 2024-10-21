@@ -91,6 +91,11 @@ function ShowArticleDetails() {
             <td>Rating</td>
             <td>{article.rating || 'No rating'}</td>
           </tr>
+          <tr>
+            <th scope='row'>9</th>
+            <td>SE Practice</td>
+            <td>{article.SEPractice || 'No SE Practice'}</td>
+          </tr>
         </tbody>
       </table>
     </div>

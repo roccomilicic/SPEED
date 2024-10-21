@@ -47,6 +47,10 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "rating", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ required: false, default: '' }),
+    __metadata("design:type", String)
+], Article.prototype, "SEPractice", void 0);
+__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "summary", void 0);
