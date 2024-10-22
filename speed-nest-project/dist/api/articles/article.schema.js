@@ -58,7 +58,7 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "status", void 0);
 exports.Article = Article = __decorate([
-    (0, mongoose_1.Schema)()
+    (0, mongoose_1.Schema)({})
 ], Article);
 exports.ArticleSchema = mongoose_1.SchemaFactory.createForClass(Article);
 //# sourceMappingURL=article.schema.js.map
