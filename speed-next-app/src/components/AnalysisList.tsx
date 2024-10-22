@@ -92,7 +92,6 @@ function AnalysisList() {
           <th>Claim</th>
           <th>Evidence</th>
           <th>Rating</th>
-          <th>SE Practice</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -109,7 +108,6 @@ function AnalysisList() {
               <td>{article.claim || 'No claims'}</td>
               <td>{article.evidence || 'No evidence'}</td>
               <td>{article.rating || 'No ratings'}</td>
-              <td>{article.SEPractice || 'No SE Practice'}</td>
               <td>{article.status}</td>
               <td>
                 <button className="AnalysisList-edit-btn" onClick={() => handleEdit(article)}>Edit</button>
@@ -134,9 +132,7 @@ function AnalysisList() {
                     <label>Evidence</label>
                     <input type="text" name="evidence" value={editedArticle?.evidence || ''} onChange={handleInputChange} />
                     <label>Rating</label>
-                    <input type="text" name="rating" value={editedArticle?.rating || ''} onChange={handleInputChange} />       
-                    <label>SE Practice</label>
-                    <input type="text" name="SEPractice" value={editedArticle?.SEPractice || ''} onChange={handleInputChange} />
+                    <input type="text" name="rating" value={editedArticle?.rating || ''} onChange={handleInputChange} />
                     <button className="AnalysisList-save-btn" onClick={handleSave}>Save</button>
                   </div>
                 </td>

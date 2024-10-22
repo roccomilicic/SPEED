@@ -177,19 +177,6 @@ function UpdateArticleInfo() {
               />
             </div>
             <br />
-            <br />
-            <div className='form-group'>
-              <label htmlFor='SEPractice'>SE Practice</label>
-              <input
-                type='text'
-                placeholder='SE Practice'
-                name='SEPractice'
-                className='form-control'
-                value={article.SEPractice || ''} 
-                onChange={inputOnChange}
-              />
-            </div>
-            <br />
             <button type='submit' className='btn btn-outline-info btn-lg btn-block'>
               Update Article
             </button>

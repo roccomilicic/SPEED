@@ -29,9 +29,6 @@ export class Article {
   @Prop({ required: true, default: '3' })
   rating: string;
 
-  @Prop({ required: false, default: '' })
-  SEPractice: string;
-
   @Prop()
   summary: string;
 

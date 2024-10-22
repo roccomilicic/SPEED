@@ -19,7 +19,6 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         <p className="card-text"><strong>Claim:</strong> {article.claim}</p>
         <p className="card-text"><strong>Evidence:</strong> {article.evidence}</p>
         <p className="card-text"><strong>Rating:</strong> {article.rating}</p>
-        <p className="card-text"><strong>SEPractice:</strong> {article.SEPractice}</p>
       </div>
     </div>
   );

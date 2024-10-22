@@ -9,7 +9,6 @@ export declare class Article {
     claim: string;
     evidence: string;
     rating: string;
-    SEPractice: string;
     summary: string;
     status: 'Pending' | 'Approved' | 'Rejected';
 }
